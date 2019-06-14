@@ -1,6 +1,8 @@
 
 //1.引入express模块
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const path = require('path');
 const app = express();
 
@@ -19,6 +21,19 @@ app.use(express.static('public'));
 //设置body中间件
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
+//设置使用session
+//使用了session中间件之后，提供了一个req.session的属性
+app.use(session({
+    secret:'OJBK',  //签名
+    resave:true,    //重新设置session
+    cookie:{
+        maxAge:1000*60*2
+}
+}));
+
+// 设置 req.cookies 当使用 session 的时候，它内置了 cookieParser 所以我们不需要写它了
+// app.use(cookieParser());
 
 //设置允许跨域cors
 app.use((req,res,next)=>{

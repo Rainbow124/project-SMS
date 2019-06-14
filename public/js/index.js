@@ -98,7 +98,7 @@ $(function () {
                 }
             }
         })
-    })
+    });
 
 //    4.搜索操作
     $('#searchBtn').click(function () {
