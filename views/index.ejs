@@ -1,40 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>xx-后台管理系统</title>
-  <link rel="stylesheet/less" href="./css/reset.less">
-  <link rel="stylesheet/less" href="./css/common.less">
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1110021_bv6rtxt80dt.css">
-  <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
-
-  <style>
-    .location{
-      margin: 150px auto;
-    }
-  </style>
-</head>
-<body>
-
-  <header class="lv-header">
-    <div class="lv-header-left">
-      <a href="/" class="logo"><h1>骚猪 - 我的天，你真帅</h1></a>
-    </div>
-    <div class="lv-header-right">
-      <div class="btn"><i class="iconfont icon-setting"></i></div>
-      <div class="btn"><i class="iconfont icon-edit"></i></div>
-      <div class="user">
-        <img class="avator" src="./images/avator.png" alt="">
-        <span class="nickname">Admin</span>
-        <i class="iconfont icon-down"></i>
-      </div>
-    </div>
-  </header>
+<%- include('./common/header.ejs') %>
 
   <div class="lv-main">
 
@@ -115,24 +79,27 @@
         </tr>
         </thead>
         <tbody id="tbody">
-          <tr>
-            <td>1</td>
-            <td>钱文波</td>
-            <td>30</td>
-            <td>sz-1904</td>
+        <% for (var i = 0;i<list.length; i++){%>
+        <tr>
+            <td><%= i + 1 %></td>
+            <td><%= list[i].studentName %></td>
+            <td><%= list[i].age %></td>
+            <td><%= list[i].grade %></td>
             <td><button class="btn btn-danger">删除</button></td>
-          </tr>
+        </tr>
+        <% } %>
+
         </tbody>
       </table>
       <!-- 分页 -->
       <div class="lv-pagination right">
         <ul>
           <li class="lv-pagination__item prev"><a href="#"><i class="iconfont icon-doubleleft"></i></a></li>
-          <li class="lv-pagination__item active"><a href="#">1</a></li>
-          <li class="lv-pagination__item"><a href="#">2</a></li>
-          <li class="lv-pagination__item"><a href="#">3</a></li>
-          <li class="lv-pagination__item"><a href="#">4</a></li>
-          <li class="lv-pagination__item"><a href="#">5</a></li>
+          <%for (var i = 1; i <= totalPage; i++){ %>
+                <li class="lv-pagination__item <%= i === pageNum? 'active' : '' %>">
+                    <a href="/?pageNum= <%= i %>&pageSize=<%= pageSize%>"><%= i %></a></li>
+          <% }%>
+
           <li class="lv-pagination__item next"><a href="#"><i class="iconfont icon-doubleright"></i></a></li>
         </ul>
       </div>
@@ -140,8 +107,4 @@
     </div>
   </div>
 
-  <script src="./js/less.min.js"></script>
-  <script src="js/index.js"></script>
-
-</body>
-</html>
+    <%- include('./common/footer.ejs') %>

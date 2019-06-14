@@ -12,7 +12,7 @@ const schema = db.Schema({
         type: String,
         required: true,
     },
-    avater:{
+    avatar:{
         type: String,
         default: 'http://localhost:3436/Rainbow.jpg'
     },

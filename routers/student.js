@@ -53,7 +53,7 @@ router.get('/student',(req,res)=>{
                 // console.log(nums);
                 res.send({
                     code:0,
-                    msg:'0k',
+                    msg:'ok',
                     data:{
                         list: data,
                         totalPage:Math.ceil(nums / pageSize)
