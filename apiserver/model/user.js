@@ -25,4 +25,5 @@ const schema = db.Schema({
         default: 18
     }
 });
+
 module.exports = db.model('user',schema);
