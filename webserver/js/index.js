@@ -12,6 +12,10 @@ function getStudentList() {
             studentName: searchVal,
         },
         method:"get",
+        //请求头
+        headers:{
+          Access_Token: localStorage.getItem('token')
+        },
 
         success:function (res) {
             // console.log(res);
@@ -19,6 +23,8 @@ function getStudentList() {
                 alert(res.msg);
                 return;
             }
+
+
             let studentList = res.data.list;
             // console.log(studentList);
             let totalPage = res.data.totalPage;
@@ -64,6 +70,29 @@ function getStudentList() {
 }
 
 $(function () {
+    //0. 判断有没有token，有就继续，没有就返回的登录页
+
+    if(!localStorage.getItem('token')){
+        location.href = '/login.html';
+        return;
+    }
+     //更新用户名
+    $.ajax({
+        url:'http://localhost:3436/api/check',
+
+        method:"POST",
+        //请求头
+        headers:{
+            Access_Token: localStorage.getItem('token')
+        },
+
+        success:function (res) {
+            let username = res.username;
+
+            $('.nickname').text(username);
+        }
+    });
+
     //   1. 获取到所有学生的信息
     getStudentList();
 //    2.监听分页按钮的点击事件
@@ -88,6 +117,9 @@ $(function () {
         $.ajax({
             url:`http://localhost:3436/api/student/${id}`,
             method:'DELETE',
+            headers:{
+                Access_Token: localStorage.getItem('token')
+            },
             success:function (res) {
                 if(res.code === 0){
                     //    删除成功
@@ -139,6 +171,13 @@ $(function () {
         $('#class').val('');
 
     })
+
+    //6.退出账号
+    $('.exit').click(function () {
+        localStorage.clear();
+        location.reload();
+    })
+
 });
 
 

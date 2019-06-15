@@ -14,7 +14,7 @@
 
   <div class="lv-login">
     <div class="lv-login-logo">
-      <a href="/"><h1>骚猪 - 我的天，你真帅</h1></a>
+      <a href="/"><h1>Rainbow - 我的天，你真帅</h1></a>
       <span>登录-后台管理系统</span>
     </div>
 
@@ -36,5 +36,28 @@
   </div>
 
   <script src="./js/less.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+    $(function () {
+      $('.lv-login-body__btn').click(function () {
+        $.post('http://localhost:3436/api/user/sign-in', {
+          username: $('input[name="username"]').val(),
+          password: $('input[name="password"]').val()
+        }, function (res) {
+          console.log(res);
+          if (res.code === 0) {
+            // 登录成功 - 回首页
+            // 1. 将token保存到localStorage里面
+            localStorage.setItem('token', res.data.token);
+            // 2. 回首页
+            location.href = '/';
+          } else {
+            // 登录失败
+            alert('登录失败')
+          }
+        })
+      })
+    })
+  </script>
 </body>
 </html>
