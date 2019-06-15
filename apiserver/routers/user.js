@@ -1,6 +1,7 @@
 
 const express = require('express');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const UserModel = require('../model/user');
 
@@ -54,9 +55,20 @@ router.post('/sign-in',(req,res)=>{
             let isOk = bcrypt.compareSync(password,data.password);
 
             if(isOk){
+                //登录成功
+                //1.签发一个token
+                let token = jwt.sign({
+                    userId:data._id,
+                    username:data.username
+                },'OJBK');
+
                 res.send({
                     code:0,
-                    msg:'ok'
+                    msg:'ok',
+                    data:{
+                        token:token
+                    }
+
                 })
 
             }else{
@@ -83,5 +95,7 @@ router.post('/sign-in',(req,res)=>{
         })
     })
 });
+
+
 
 module.exports = router;

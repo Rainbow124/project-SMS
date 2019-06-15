@@ -16,6 +16,7 @@ app.use(express.urlencoded({extended:true}));
 app.use((req,res,next)=>{
     res.set('Access-Control-Allow-Origin','*');
     res.set('Access-Control-Allow-Methods','GET,POST,DELETE,UPDATE,PUT');
+    res.set('Access-Control-Allow-Headers', 'Access_Token');
     next();
 })
 

@@ -1,6 +1,8 @@
 
 const express = require('express');
 const router = express.Router();
+const auth = require('../midderware/auth');
+const jwt = require('jsonwebtoken');
 const StudentModel = require('../model/student');
 
 //
@@ -38,7 +40,7 @@ router.post('/student',(req,res)=>{
 
 //查询  /api/student
 
-router.get('/student',(req,res)=>{
+router.get('/student', auth ,(req,res)=>{
     let pageNum = parseInt(req.query.pageNum) || 1;
     let pageSize = parseInt(req.query.pageSize) || 3;
     let studentName = req.query.studentName;
@@ -64,7 +66,7 @@ router.get('/student',(req,res)=>{
 });
 
 //删除
-router.delete('/student/:id',(req,res)=>{
+router.delete('/student/:id', auth, (req,res)=>{
 //    1.得到url地址上的id的值
 
     let id = req.params.id;
@@ -88,6 +90,16 @@ router.delete('/student/:id',(req,res)=>{
         }
 
     })
+
+});
+
+router.post('/check',  (req,res)=>{
+
+
+    let token = req.get('Access_Token');
+
+
+    res.send(jwt.verify(token,'OJBK'));
 
 });
 
